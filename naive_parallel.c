@@ -81,9 +81,9 @@ void computeAccelerations(int first, int last)
         {
             if (i != j)
             {
-                denom = pow(mod(subtractVectors(positions[i], positions[j])), 3);
+                denom = mod(subtractVectors(positions[i], positions[j]));
                 if (denom < FLT_EPSILON) denom = FLT_EPSILON; // вместо ResolveCollisions
-                accelerations[i] = addVectors(accelerations[i], scaleVector(GravConstant * masses[j] / denom, subtractVectors(positions[j], positions[i])));
+                accelerations[i] = addVectors(accelerations[i], scaleVector(GravConstant * masses[j] / pow(denom, 3), subtractVectors(positions[j], positions[i])));
             }
         }
     }
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 {
     int i, j;
 
-    if (argc != 3) // используем три агрумента: файл ввода, файл вывода, число потоков
+    if (argc != 3) // используем два агрумента: файл ввода и число потоков
         printf("Usage : %s <file name containing system configuration data>", argv[0]);
     else
     {
