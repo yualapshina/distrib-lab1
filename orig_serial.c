@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 #define DT 0.05
 
@@ -127,6 +128,7 @@ int main(int argc, char *argv[])
         printf("Usage : %s <file name containing system configuration data>", argv[0]);
     else
     {
+		clock_t start = clock();
         initiateSystem(argv[1]);
         FILE *out_txt = fopen("output.txt", "w");
         FILE *out_csv = fopen("output", "w");
@@ -149,6 +151,10 @@ int main(int argc, char *argv[])
         }
         fclose(out_txt);
         fclose(out_csv);
+		clock_t end = clock();
+		clock_t duration = end - start;
+		double duration_sec = (double)duration / (double)CLOCKS_PER_SEC;
+		printf("Time: %f seconds\n", duration_sec);
     }
     return 0;
 }

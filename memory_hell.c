@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
+#include <time.h>
 #include <pthread.h>
 #include <semaphore.h>
 
@@ -191,6 +192,8 @@ int main(int argc, char *argv[])
         printf("Usage : %s <file name containing system configuration data>", argv[0]);
     else
     {
+		clock_t start = clock();
+		
         threadCount = strtol(argv[2], NULL, 10);
         initiateSystem(argv[1]);
         out_txt = fopen("output.txt", "w");
@@ -247,6 +250,11 @@ int main(int argc, char *argv[])
         fclose(out_txt);
         fclose(out_csv);
         closeSystem();
+		
+		clock_t end = clock();
+		clock_t duration = end - start;
+		double duration_sec = (double)duration / (double)CLOCKS_PER_SEC;
+		printf("Time: %f seconds\n", duration_sec);
     }
     return 0;
 }
